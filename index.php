@@ -1,7 +1,15 @@
 <?php
+header('Content-Type: application/json');
+
 $blocked_phones = ['+71111111111', '+72222222222', '+73333333333', '+74444444444', '+75555555555', '+76666666666', '+77777777777'];
-$phone_to_check = readline("Input a phone number to check if it's blocked: ");
+$phone_to_check = $_GET['phone'] ?? $_POST['phone'] ?? null;
 $blocked = false;
+
+if (!$phone_to_check) {
+    echo json_encode(['error' => 'no phone number provided']);
+    http_response_code(400);
+    exit;
+}
 
 $phone_to_check = preg_replace('/\D+/', '', $phone_to_check);
 
@@ -25,11 +33,14 @@ if (preg_match('/^8(\d{10})$/', $phone_to_check, $matched_phone) || preg_match('
     }
 
     if ($blocked) {
-        echo 'block';
+        echo json_encode(['status' => 'block']);
+        http_response_code(200);
     } else {
-        echo 'ok';
+        echo json_encode(['status' => 'ok']);
+        http_response_code(200);
     }
 } else {
-    echo 'Invalid phone number';
+    echo json_encode(['status' => 'invalid phone number']);
+    http_response_code(422);
 }
 ?>
