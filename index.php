@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$blocked_phones = $blocked_phones = file('blocked_phones.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$blocked_phones = file('blocked_phones.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 sort($blocked_phones);
 $phone_to_check = $_GET['phone'] ?? $_POST['phone'] ?? null;
 $blocked = false;
