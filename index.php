@@ -1,7 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-$blocked_phones = ['+71111111111', '+72222222222', '+73333333333', '+74444444444', '+75555555555', '+76666666666', '+77777777777'];
+$blocked_phones = $blocked_phones = file('blocked_phones.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+sort($blocked_phones);
 $phone_to_check = $_GET['phone'] ?? $_POST['phone'] ?? null;
 $blocked = false;
 
