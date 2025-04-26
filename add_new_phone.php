@@ -7,6 +7,13 @@ $blocked_phones_file = 'blocked_phones.txt';
 $security_token = $_GET['token'] ?? $_POST['token'] ?? null;
 $phone_to_add = $_GET['phone'] ?? $_POST['phone'] ?? null;
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['error' => 'only POST requests are allowed']);
+    exit;
+}
+
+
 if (hash('sha256', $security_token) !== AUTHORIZATION_TOKEN_HASH) {
     echo json_encode(['error' => 'incorrect security token']);
     http_response_code(401);
