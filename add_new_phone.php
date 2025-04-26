@@ -1,13 +1,13 @@
 <?php
 header('Content-Type: application/json');
 
-define('AUTHORIZATION_TOKEN', 'securityToken');
+define('AUTHORIZATION_TOKEN_HASH', '9af43540ee7649049a0abfdedd934be6f9062f9a72abb3ff7f2b83818e8f69cc');
 $blocked_phones_file = 'blocked_phones.txt';
 
 $security_token = $_GET['token'] ?? $_POST['token'] ?? null;
 $phone_to_add = $_GET['phone'] ?? $_POST['phone'] ?? null;
 
-if ($security_token !== AUTHORIZATION_TOKEN) {
+if (hash('sha256', $security_token) !== AUTHORIZATION_TOKEN_HASH) {
     echo json_encode(['error' => 'incorrect security token']);
     http_response_code(401);
     exit;
